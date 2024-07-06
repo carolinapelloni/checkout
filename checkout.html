@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <title> Payment </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div class="product">
+
+        <div class="description">
+          <h5>We are processing your order, please wait...</h5>
+         <!-- <h3>Totale da pagare</h3>-->
+          <h5 id="totalAmountDisplay"></h5>
+        </div>
+      </div>
+
+<!--      <button type="button" id="checkout-button">Checkout</button>-->
+
+      <form action="/create-checkout-session" method="POST">
+        <!-- Hidden input fields to pass the values -->
+        <input type="hidden" name="totalAmount" id="totalAmountInput">
+        <input type="hidden" name="id" id="id">
+        <input type="hidden" name="shippingCost" id="shippingCostInput">
+        <input type="hidden" name="couponCode" id="couponCodeInput">
+        <input type="hidden" name="customerEmail" id="customerEmailInput">
+
+        <!-- Checkout button -->
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+
+    </section>
+
+    <script>
+      // Get a reference to the button
+      var checkoutButton = document.getElementById("checkout-button");
+
+      // Add an onclick event listener to the button
+      checkoutButton.addEventListener("click", function() {
+
+        // Parse query parameters
+        const queryParams = new URLSearchParams(window.location.search);
+
+        // Get the values and set them to the corresponding hidden input fields
+        document.getElementById("totalAmountInput").value = queryParams.get("totalAmount");
+        document.getElementById("id").value = queryParams.get("id");
+        document.getElementById("shippingCostInput").value = queryParams.get("shippingCost");
+        document.getElementById("couponCodeInput").value = queryParams.get("couponCode");
+        document.getElementById("customerEmailInput").value = queryParams.get("customerEmail");
+
+
+      });
+      // Automatically click the checkout button when the page loads
+      document.addEventListener("DOMContentLoaded", function() {
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.click();
+      });
+
+    </script>
+    <script>
+      // Parse query parameters
+      const queryParams = new URLSearchParams(window.location.search);
+
+      // Get the totalAmount value and set it to the corresponding HTML element
+      const totalAmount = queryParams.get("totalAmount");
+      document.getElementById("totalAmountDisplay").value = totalAmount;
+
+      // Automatically click the checkout button when the page loads
+      document.addEventListener("DOMContentLoaded", function() {
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.click();
+      });
+
+    </script>
+
+    <!--<script>
+      // Get a reference to the button ?totalAmount=44.0&shippingCost=10.0&couponCode=SC10&customerEmail=gulsinabikbaeva@gmail.com
+      var checkoutButton = document.getElementById("checkout-button");
+
+      // Add an onclick event listener to the button
+      checkoutButton.addEventListener("click", function() {
+        const query = window.location.search
+        console.log(query);
+        fetch("/create-checkout-session"+query,{
+          method:"POST"
+        })
+
+      });
+    </script>-->
+
+  <!--<script>
+    const query = window.location.search
+    console.log(query);
+  </script>-->
+
+  </body>
+</html>

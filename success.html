@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thanks for your order!</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Style for the green checkbox */
+    .checkbox-container {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      height: 100vh; /* Adjust as needed */
+    }
+
+    .checkbox {
+      color: green;
+      font-size: 25px; /* Adjust the font size as needed */
+    }
+  </style>
+</head>
+<body>
+<section class="checkbox-container">
+
+
+  <!-- Add a button with an ID -->
+  <button id="redirectButton" style="display:none;">Redirect</button>
+
+    <!-- Green checkbox -->
+
+    <span class="checkbox">&#10004;</span>
+    <!-- Text with bigger font size -->
+    <h1>Transaction completed successfully</h1>
+  </section>
+
+<script>
+  window.onload = function() {
+    // Retrieve the id parameter from the URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+
+    // Construct the redirect URL with the id parameter
+    var redirectUrl = 'http://localhost:8080/paymentConfirmation/' + id;
+
+    // Redirect to the constructed URL
+    window.location.href = redirectUrl;
+  };
+</script>
+
+<!--  <script>
+    // Function to redirect to localhost:6060 when the page loads
+    window.onload = function() {
+      // Redirect to localhost:6060
+      window.location.href = 'http://localhost:6060/paymentConfirmation';
+    };
+  </script>-->
+</body>
+</html>
